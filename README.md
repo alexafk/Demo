@@ -3,3 +3,6 @@
 bash <(curl -fsSLk https://raw.githubusercontent.com/bulianglin/demo/main/xrayL.sh) socks
 # 配置vmess+ws代理
 bash <(curl -fsSLk https://raw.githubusercontent.com/bulianglin/demo/main/xrayL.sh) vmess
+
+
+https://b.bulianglin0.workers.dev/
