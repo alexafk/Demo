@@ -1,0 +1,445 @@
+###############################################################
+# 本范例来源为网友
+# 感谢网友 Ricky9w 私分享
+# 新手用户专用版
+###############################################################
+
+
+mixed-port: 7890
+#---------------------------------------------------#
+## 配置文件需要放置在 $HOME/.config/clash/*.yaml
+allow-lan: false
+mode: Rule
+log-level: silent
+external-controller: 127.0.0.1:60000
+
+# 节点配置文件统一存放在 ./profiles/proxies/ 目录中
+proxy-providers:
+  # 从链接导入的配置文件
+#    url: http://67.198.153.79/foo.yaml
+  foo:
+    type: http
+    path: ./profiles/proxies/dmit.yaml
+    #url: https://tg.cmliussss.us.kg/auto
+    #url: https://dmit.16.pm/dmit.list
+    url: https://tg.cmliussss.us.kg/auto
+    interval: 86400 
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+  cf:
+    type: http
+    path: ./profiles/proxies/byte.yaml
+    url: https://gcore.jsdelivr.net/gh/alexafk/Demo@main/dmit.list
+    interval: 86400 
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+proxy-groups:
+  - name: 节点选择
+    type: select
+    proxies:
+      - 自动选择
+      - 故障转移
+      - 负载均衡
+      - 手动切换
+      - DIRECT
+  - name: 手动切换
+    type: select
+    use:
+      - foo
+      - cf
+  - name: 自动选择
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - foo
+      - cf
+  - name: 故障转移
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - foo
+      - cf
+  - name: 负载均衡
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    use:
+      - cf
+  - name: 电报消息
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 手动切换
+      - DIRECT
+  - name: OpenAi
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 手动切换
+      - DIRECT
+  - name: 油管视频
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 手动切换
+      - DIRECT
+  - name: 奈飞视频
+    type: select
+    proxies:
+      - 节点选择
+      - 奈飞节点
+      - 自动选择
+      - 手动切换
+      - DIRECT
+  - name: 哔哩哔哩
+    type: select
+    proxies:
+      - 全球直连
+  - name: 国外媒体
+    type: select
+    proxies:
+      - 节点选择
+      - 自动选择
+      - 手动切换
+      - DIRECT
+  - name: 国内媒体
+    type: select
+    proxies:
+      - DIRECT
+      - 手动切换
+  - name: 谷歌FCM
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 微软Bing
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 微软云盘
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 手动切换
+  - name: 网易音乐
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+  - name: 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+  - name: 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 漏网之鱼
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+      - 自动选择
+      - 手动切换
+  - name: 奈飞节点
+    type: select
+    proxies:
+      - DIRECT
+  - name: GFW
+    type: select
+    proxies:
+      - 节点选择
+      - DIRECT
+# clash-rules项目提供的规则集
+# 规则文件统一存放在 ./profiles/rules/ 目录中
+rule-providers:
+  全球直连:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list"
+    path: ./profiles/rules/LocalAreaNetwork.list
+    interval: 86400
+  全球直连UnBan:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/UnBan.list"
+    path: ./profiles/rules/UnBan.list
+    interval: 86400
+  广告拦截:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanAD.list"
+    path: ./profiles/rules/BanAD.list
+    interval: 86400
+  应用净化:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list"
+    path: ./profiles/rules/BanProgramAD.list
+    interval: 86400
+  谷歌FCM:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/GoogleFCM.list"
+    path: ./profiles/rules/GoogleFCM.list
+    interval: 86400
+  全球直连GoogleCN:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/GoogleCN.list"
+    path: ./profiles/rules/GoogleCN.list
+    interval: 86400
+  全球直连SteamCN:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/SteamCN.list"
+    path: ./profiles/rules/SteamCN.list
+    interval: 86400
+  微软Bing:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Bing.list"
+    path: ./profiles/rules/Bing.list
+    interval: 86400
+  微软云盘:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/OneDrive.list"
+    path: ./profiles/rules/OneDrive.list
+    interval: 86400
+  微软服务:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Microsoft.list"
+    path: ./profiles/rules/Microsoft.list
+    interval: 86400
+  苹果服务:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Apple.list"
+    path: ./profiles/rules/Apple.list
+    interval: 86400
+  电报消息:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Telegram.list"
+    path: ./profiles/rules/Telegram.list
+    interval: 86400
+  OpenAi:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/OpenAi.list"
+    path: ./profiles/rules/OpenAi.list
+    interval: 86400
+  网易音乐:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/NetEaseMusic.list"
+    path: ./profiles/rules/NetEaseMusic.list
+    interval: 86400
+  游戏平台Epic:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Epic.list"
+    path: ./profiles/rules/Epic.list
+    interval: 86400
+  游戏平台Origin:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Origin.list"
+    path: ./profiles/rules/Origin.list
+    interval: 86400
+  游戏平台Sony:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Sony.list"
+    path: ./profiles/rules/Sony.list
+    interval: 86400
+  游戏平台Steam:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Steam.list"
+    path: ./profiles/rules/Steam.list
+    interval: 86400
+  游戏平台Nintendo:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Nintendo.list"
+    path: ./profiles/rules/Nintendo.list
+    interval: 86400
+  油管视频:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/YouTube.list"
+    path: ./profiles/rules/YouTube.list
+    interval: 86400
+  奈飞视频:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Netflix.list"
+    path: ./profiles/rules/Netflix.list
+    interval: 86400
+  国内媒体:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaMedia.list"
+    path: ./profiles/rules/ChinaMedia.list
+    interval: 86400
+  国外媒体:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyMedia.list"
+    path: ./profiles/rules/ProxyMedia.list
+    interval: 86400
+  GFW:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyGFWlist.list"
+    path: ./profiles/rules/ProxyGFWlist.list
+    interval: 86400
+  全球直连ChinaDomain:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaDomain.list"
+    path: ./profiles/rules/ChinaDomain.list
+    interval: 86400
+  全球直连ChinaCompanyIp:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list"
+    path: ./profiles/rules/ChinaCompanyIp.list
+    interval: 86400
+  全球直连Download:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Download.list"
+    path: ./profiles/rules/Download.list
+    interval: 86400
+  全球直连ChinaIp:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaIp.list"
+    path: ./profiles/rules/ChinaIp.list
+    interval: 86400
+  Demo:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/alexafk/Demo@main/Demo.list"
+    path: /profiles/rules/Demo.list
+    interval: 86400
+  直连:
+    type: http
+    behavior: classical
+    format: text
+    url: "https://gcore.jsdelivr.net/gh/alexafk/Demo@main/direct.list"
+    path: /profiles/rules/Demo.list
+    interval: 86400
+
+# 规则
+rules:
+  - RULE-SET,直连,DIRECT
+  - RULE-SET,Demo,节点选择
+  - DOMAIN-SUFFIX,githubusercontent.com,节点选择
+  - RULE-SET,全球直连,DIRECT
+  - RULE-SET,全球直连UnBan,DIRECT
+#  - RULE-SET,广告拦截,广告拦截
+#  - RULE-SET,应用净化,应用净化
+  - RULE-SET,谷歌FCM,谷歌FCM
+  - RULE-SET,全球直连GoogleCN,DIRECT
+  - RULE-SET,全球直连SteamCN,DIRECT
+  - RULE-SET,微软Bing,微软Bing
+  - RULE-SET,微软云盘,微软云盘
+  - RULE-SET,微软服务,微软服务
+  - RULE-SET,苹果服务,苹果服务
+  - RULE-SET,电报消息,电报消息
+  - RULE-SET,OpenAi,OpenAi
+  - RULE-SET,网易音乐,网易音乐
+  - RULE-SET,游戏平台Epic,游戏平台
+  - RULE-SET,游戏平台Origin,游戏平台
+  - RULE-SET,游戏平台Sony,游戏平台
+  - RULE-SET,游戏平台Steam,游戏平台
+  - RULE-SET,游戏平台Nintendo,游戏平台
+  - RULE-SET,油管视频,油管视频
+  - RULE-SET,奈飞视频,奈飞视频
+  - RULE-SET,国内媒体,国内媒体
+  - RULE-SET,国外媒体,国外媒体
+  - RULE-SET,GFW,GFW
+  - RULE-SET,全球直连ChinaDomain,DIRECT
+  - RULE-SET,全球直连ChinaCompanyIp,DIRECT
+  - RULE-SET,全球直连Download,DIRECT
+  - RULE-SET,全球直连ChinaIp,DIRECT
+  - MATCH,DIRECT
+  
