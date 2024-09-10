@@ -1,4 +1,5 @@
 proxies:
+  - {name: IPV4, server: 154.17.7.29, port: 20001, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
   - {name: D3564, server: 2605:52c0:2:1713:973f:b23b:1cbd:3564, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
   - {name: D4358, server: 2605:52c0:2:1713:785:dccd:4eda:4358, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
   - {name: D1f32, server: 2605:52c0:2:1713:9679:fd66:9475:1f32, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
@@ -29,4 +30,4 @@ proxies:
 #  - {name: aa6d, server: 2605:52c0:2:1713:9e57:4417:1d97:aa6d, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
 #  - {name: 77fe, server: 2605:52c0:2:1713:ea24:5b36:a7d8:7fe, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
 #  - {name: 3ed5, server: 2605:52c0:2:1713:3f26:ed27:b653:3ed5, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
-  - {name: IPV4, server: 154.17.7.29, port: 20000, type: vmess, uuid: d0c3ef5b-f950-4215-aefd-4fd62dc17a9b, alterId: 0, cipher: auto, tls: false, network: ws, ws-opts: {path: /ws}}
+
